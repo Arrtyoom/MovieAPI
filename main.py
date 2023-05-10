@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import sqlite3
 
 app = Flask(__name__)
@@ -8,10 +8,11 @@ app = Flask(__name__)
 def get_movies():
     db = sqlite3.connect('movies.db')
     c = db.cursor()
-    c.execute("SELECT title FROM movies")
-    movies = [row[0] for row in c.fetchall()]
+    c.execute("SELECT * FROM movies")
+    movies = []
+    for movie in c.fetchall():
+        movies.append({'id': movie[0], 'title': movie[1], 'year': movie[2], 'director': movie[3], 'genre': movie[4]})
     return movies
-
 
 def get_movie(id):
     db = sqlite3.connect('movies.db')
@@ -19,7 +20,7 @@ def get_movie(id):
     c.execute("SELECT * FROM movies WHERE id=?", (id,))
     movie = c.fetchone()
     if movie:
-        return {'title': movie[1], 'year': movie[2], 'director': movie[3], 'genre': movie[4]}
+        return {'id': movie[0], 'title': movie[1], 'year': movie[2], 'director': movie[3], 'genre': movie[4]}
     else:
         return {}
 
@@ -27,12 +28,19 @@ def get_movie(id):
 def search_movies(query):
     db = sqlite3.connect('movies.db')
     c = db.cursor()
-    c.execute("SELECT title FROM movies WHERE title LIKE ?", ('%' + query + '%',))
-    movies = [row[0] for row in c.fetchall()]
+    c.execute("SELECT * FROM movies WHERE title LIKE ?", ('%' + query + '%',))
+    movies = []
+    for movie in c.fetchall():
+        movies.append({'id': movie[0], 'title': movie[1], 'year': movie[2], 'director': movie[3], 'genre': movie[4]})
     return movies
 
 
 # Routes Flask
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
 @app.route('/movies', methods=['GET'])
 def movies():
     # Récupérer tous les films depuis la base de données
