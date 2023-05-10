@@ -2,18 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+
+    <title>MovieAPI</title>
 </head>
 <body>
-    <a href="/movies">Movies</a>
+    <header>
+        <h1>MovieAPI</h1>
+        <p>Bienvenue sur MovieAPI ! Cette API vous permet d'accéder à des informations sur les films stockés dans notre base de données.</p>
+    </header>
 
-    <br>
+    <nav>
+        <ul>
+            <li><a href="/movies">Films</a></li>
+        </ul>
+    </nav>
 
-    <form action="/movies/search" method="get">
-            <label for="search">Search:</label>
+    <section>
+        <h2>Rechercher un film :</h2>
+        <p>Utilisez le formulaire de recherche ci-dessous pour trouver un film spécifique par titre :</p>
+        <form action="/movies/search" method="get">
             <input type="text" id="search" name="q">
-            <button type="submit">Submit</button>
-    </form>
+            <button type="submit">Rechercher</button>
+        </form>
+    </section>
 
 </body>
 </html>
