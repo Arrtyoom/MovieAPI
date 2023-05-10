@@ -3,20 +3,20 @@ import sqlite3
 # Establish a connection to a database
 conn = sqlite3.connect('movies.db')
 
-# Create a cursor object
+# Creer un objet curseur
 c = conn.cursor()
 
-# Create a table named 'movies' with columns for movie id, title, release year, director, and genre
+# Creer une table nomme 'movies' avec les colomne pour id, title, release year, director, and genre
 c.execute('''CREATE TABLE movies
              (id INTEGER PRIMARY KEY, title TEXT, year INTEGER, director TEXT, genre TEXT)''')
 
-# Insert data into the 'movies' table
+# insertion des donnée dans la db
 c.execute("INSERT INTO movies (title, year, director, genre) VALUES (?, ?, ?, ?)", ('The Godfather', 1972, 'Francis Ford Coppola', 'Crime/Drama'))
 c.execute("INSERT INTO movies (title, year, director, genre) VALUES (?, ?, ?, ?)", ('The Shawshank Redemption', 1994, 'Frank Darabont', 'Drama'))
 c.execute("INSERT INTO movies (title, year, director, genre) VALUES (?, ?, ?, ?)", ('The Dark Knight', 2008, 'Christopher Nolan', 'Action/Thriller'))
 
-# Commit the changes
+# "enregistr" les changement
 conn.commit()
 
-# Close the connection
+# Termine la connection
 conn.close()
